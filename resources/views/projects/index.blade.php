@@ -68,4 +68,33 @@
         </div>
     </form>
     </x-bladewind.modal>
+
+    <x-bladewind::modal name="delete-project" type="error" title="Confirm Project Deletion" ok_button_action="destroyProject()">
+        Are you really sure you want to delete <b class="title"></b>?
+        This action cannot be reversed.
+    </x-bladewind::modal>
+
+    <script>
+
+        deleteProject = (id, title) => {
+            showModal('delete-project');
+            domEl('.bw-delete-project .title').innerText = `${title}`;
+            domEl('.bw-delete-project').setAttribute('data-project-id', id);
+        }
+        
+        destroyProject = () => {
+            const id = domEl('.bw-delete-project').getAttribute('data-project-id');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+            
+            axios.post(`{{ route('projects.delete', ['id' => ':id']) }}`.replace(':id', id))
+            .then(response => {
+                alert(`Project with ID ${id} deleted successfully`);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </x-app-layout>

@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Client;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -15,9 +16,8 @@ class ProjectController extends Controller
     public function index()
     {
         $action_icons = [
-            "icon:chat-bubble-left | tip:send user a message | color:green | click:redirect('/user/{id}')",
             "icon:pencil | click:redirect('/user/{id}')",
-            "icon:trash | color:red | click:redirect('/user/{id}')",
+            "icon:trash | color:red | click:deleteProject({id}, '{title}')",
         ];
 
         $projects = Project::all();
@@ -74,8 +74,10 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::find($id)->delete();
+
+        return redirect()->back();
     }
 }
