@@ -45,7 +45,7 @@
     if ($canClose) $can_close = $canClose;
     if (!$addIdPrefix) $add_id_prefix = $addIdPrefix;
 
-    $rounded_class = ($rounded) ? 'rounded-full' : 'rounded-md';
+    $rounded_class = ($rounded) ? 'rounded-full' : '';
     $clearing_css = ($add_clearing) ? 'mb-3' : '';
     $bg_border_color_css = ($outline) ? "border border-$color-$color_weight[$shade] text-$color-500" : "bg-$color-$color_weight[$shade] text-$color-$text_color_weight[$shade]";
     $text_color_css = ($outline) ? "text-$color-500" : "text-$color-$text_color_weight[$shade]";

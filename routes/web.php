@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/projects', [ProjectController::class, 'index'])->middleware(['auth', 'verified'])->name('projects');
 Route::post('/projects/add', [ProjectController::class, 'store'])->middleware(['auth', 'verified'])->name('projects.add');
 Route::post('/projects/delete/{id}', [ProjectController::class, 'destroy'])->middleware(['auth', 'verified'])->name('projects.delete');
+Route::get('/projects/{id}', [ProjectController::class, 'show'])->middleware(['auth', 'verified'])->name('projects.show');
 
 Route::get('/clients', [ClientController::class, 'index'])->middleware(['auth', 'verified'])->name('clients');
 Route::post('/clients/add', [ClientController::class, 'store'])->middleware(['auth', 'verified'])->name('clients.add');

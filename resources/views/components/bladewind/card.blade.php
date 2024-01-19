@@ -25,7 +25,7 @@
     if ( !$hasShadow ) $has_shadow = $hasShadow;
     if ( $reducePadding ) $reduce_padding = $reducePadding;
 @endphp
-<div class="bw-card bg-gray dark:bg-dark-900  @if($header === null && ! $reduce_padding) p-8 @elseif($reduce_padding) p-4 @else @endif rounded-lg @if($has_shadow) shadow-2xl shadow-gray-200/40 dark:shadow-xl dark:shadow-dark-900 @endif {{ $class }}">
+<div class="bw-card bg-gray dark:bg-dark-900  @if($header === null && ! $reduce_padding) p-8 @elseif($reduce_padding) p-4 @else @endif  @if($has_shadow) shadow-2xl shadow-gray-200/40 dark:shadow-xl dark:shadow-dark-900 @endif {{ $class }}">
     @if($header)
         <div class="border-b border-gray-100/30 dark:border-dark-800/50">
             {{ $header }}
