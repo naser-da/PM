@@ -35,5 +35,6 @@ Route::post('/projects/delete/{id}', [ProjectController::class, 'destroy'])->mid
 
 Route::get('/clients', [ClientController::class, 'index'])->middleware(['auth', 'verified'])->name('clients');
 Route::post('/clients/add', [ClientController::class, 'store'])->middleware(['auth', 'verified'])->name('clients.add');
+Route::post('/clients/delete/{id}', [ClientController::class, 'destroy'])->middleware(['auth', 'verified'])->name('clients.delete');
 
 require __DIR__.'/auth.php';

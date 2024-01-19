@@ -90,7 +90,7 @@
             
             axios.post(`{{ route('projects.delete', ['id' => ':id']) }}`.replace(':id', id))
             .then(response => {
-                alert(`Project with ID ${id} deleted successfully`);
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error:', error);

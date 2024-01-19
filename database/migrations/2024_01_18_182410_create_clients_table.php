@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('organization')->nullable()->comment('name of the organization the client works for');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->text('notes');
+            $table->date('birthday')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -78,6 +78,6 @@ class ProjectController extends Controller
     {
         $project = Project::find($id)->delete();
 
-        return redirect()->back();
+        return redirect()->route('projects');
     }
 }

@@ -5,7 +5,7 @@
             <x-bladewind::button 
                 radius="none" 
                 size="small"
-                onclick="showModal('create-project')"
+                onclick="showModal('create-client')"
                     >
                 New Client
             </x-bladewind::button>
@@ -23,7 +23,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <x-bladewind.table
                         searchable="true"
-                        exclude_columns="id,created_at, updated_at, phone"
+                        exclude_columns="id,created_at, updated_at, phone, birthday, notes"
                         divider="thin"
                         :action_icons="$action_icons"
                         :data="$clients" />
@@ -32,31 +32,21 @@
         </div>
     </div>
 
-    {{-- <x-bladewind.modal
-    name="create-project"
+    <x-bladewind.modal
+    name="create-client"
     show_action_buttons="false"
     >
+
+
     <form method="POST" class="signup-form" action="{{route('clients.add')}}">
         @csrf
-        <x-bladewind.card title="Add New Project" class="">
-            <x-bladewind.input required="true" label="Project's Title" name="title"  />
-            <x-bladewind.input required="true" label="Total Pts." name="volume"  />
-            <x-bladewind.input required="true" label="Word Count" name="word_count"  />
-            <x-bladewind.datepicker name="deadline" label="Deadline" class="bg-slate-950"/>
-            <x-bladewind.dropdown
-                required="true"
-                name="type_id"
-                label_key="name"
-                value_key="id"
-                placeholder="Pick The Project Type"
-                :data="$types" />
-            <x-bladewind.dropdown
-                required="true"
-                name="client_id"
-                label_key="name"
-                value_key="id"
-                placeholder="Client name"
-                :data="$clients" />
+        <x-bladewind.card title="Add New Client" class="">
+            <x-bladewind.input required="true" label="Name" name="name"  />
+            <x-bladewind.input required="true" label="Organization" name="organization"  />
+            <x-bladewind.input label="Email" name="email"  />
+            <x-bladewind.input label="Phone Number" name="phone" />
+            <x-bladewind.datepicker name="birthday" label="Birthday" class="bg-slate-950"/>
+            <x-bladewind.textarea label="Notes" name="notes"  />
 
         </x-bladewind.card>
 
@@ -66,5 +56,34 @@
             </x-bladewind.button>
         </div>
     </form>
-    </x-bladewind.modal> --}}
+    </x-bladewind.modal>
+
+    <x-bladewind::modal name="delete-client" type="error" title="Confirm Client Deletion" ok_button_action="destroyClient()">
+        Are you really sure you want to delete <b class="title"></b>?
+        This action cannot be reversed.
+    </x-bladewind::modal>
+
+    <script>
+
+        deleteClient = (id, name) => {
+            showModal('delete-client');
+            domEl('.bw-delete-client .title').innerText = `${name}`;
+            domEl('.bw-delete-client').setAttribute('data-client-id', id);
+        }
+        
+        destroyClient = () => {
+            const id = domEl('.bw-delete-client').getAttribute('data-client-id');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
+            
+            axios.post(`{{ route('clients.delete', ['id' => ':id']) }}`.replace(':id', id))
+            .then(response => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </x-app-layout>
